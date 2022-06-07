@@ -1,8 +1,12 @@
-const w = await fetch('https://random-word-api.herokuapp.com/word?number=15');
-let text = undefined;
-await w.json().then((t) => {
-    text = t;
-})
+import randomWords from "./random_words.js"
+
+// const w = await fetch('https://random-word-api.herokuapp.com/word?number=15');
+// let text = undefined;
+// await w.json().then((t) => {
+//     text = t;
+// })
+
+const text = randomWords(15);
 
 const body = document.querySelector('body');
 body.style.opacity = 1;
