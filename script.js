@@ -6,32 +6,33 @@ import randomWords from "./random_words.js"
 //     text = t;
 // })
 
-const text = randomWords(15);
-
 const body = document.querySelector('body');
 body.style.opacity = 1;
 
 const typer = document.querySelector('.typer');
 const focus = document.querySelector('.focus');
 
-text.forEach((str) => {
-    const wordElem = document.createElement('div');
-    wordElem.classList.add('word');
-
-    str += ' ';
-    str.split('').forEach((letter) => {
-        const letterElem = document.createElement('div');
-        letterElem.textContent = letter;
-        letterElem.classList.add('base-color', 'letter');
-        wordElem.appendChild(letterElem);
-    })
-    typer.appendChild(wordElem);
-})
-
+let words = [];
 const time = document.querySelector('.timer');
 time.textContent = '0';
 
-const words = document.querySelectorAll('.word:not(.space)');
+let t = 0;
+let timerId = null;
+let resultsId = null;
+function timer() {
+   
+    timerId = setInterval(() => {
+        if (!type.ended) {
+            t++;
+            if (t < 60) {
+                time.textContent = t;
+            } else {
+                const seconds = t % 60;
+                time.textContent = `${Math.floor(t / 60)}:${seconds >= 10 ? seconds : '0' + seconds}`
+            }
+        }
+    }, 1000);
+}
 
 const line = document.createElement('div');
 line.textContent = '|';
@@ -46,26 +47,75 @@ let charsAdded = 0;
 let wordCount = 0;
 let letterCount = 0;
 
-words[wordCount].children[letterCount].appendChild(line);
-
 const charCounters = document.querySelectorAll('.counter:first-child b');
 const wordCounters = document.querySelectorAll('.counter:last-child b');
 
-let t = 0;
-function timer() {
-   
-    setInterval(() => {
-        if (!type.ended) {
-            t++;
-            if (t < 60) {
-                time.textContent = t;
-            } else {
-                const seconds = t % 60;
-                time.textContent = `${Math.floor(t / 60)}:${seconds >= 10 ? seconds : '0' + seconds}`
-            }
+function generateWords(number) {
+
+    function resetAll() {
+        wordEnded = false;
+        type = {
+            started: false,
+            ended: false
         }
-    }, 1000);
+        charsAdded = 0;
+        wordCount = 0;
+        letterCount = 0;
+        t = 0;
+        clearInterval(timerId);
+        clearInterval(resultsId);
+        time.textContent = 0;
+        charCounters.forEach((elem) => {
+            elem.textContent = 0;
+        })
+        wordCounters.forEach((elem) => {
+            elem.textContent = 0;
+        })
+
+        focus.textContent = 'Click here to focus'
+    }
+
+    typer.innerHTML = '';
+    let text = randomWords(number);
+
+    text.forEach((str) => {
+        const wordElem = document.createElement('div');
+        wordElem.classList.add('word');
+
+        str += ' ';
+        str.split('').forEach((letter) => {
+            const letterElem = document.createElement('div');
+            letterElem.textContent = letter;
+            letterElem.classList.add('base-color', 'letter');
+            wordElem.appendChild(letterElem);
+        })
+        typer.appendChild(wordElem);
+    })
+
+    words = document.querySelectorAll('.word:not(.space)');
+    line.parentElement?.remove(line);
+    words[0].children[0].appendChild(line);
+    resetAll();
 }
+
+const buttonsNumberOfWords = document.querySelectorAll('.word-count li')
+
+function changeNumberOfWords(elem) {
+    const number = Number(elem.textContent);
+    buttonsNumberOfWords.forEach((elem) => {
+        elem.classList.remove('selected');
+    })
+    elem.classList.add('selected');
+    generateWords(number);
+}
+
+buttonsNumberOfWords.forEach((elem) => {
+    elem.addEventListener('click', () => {
+        changeNumberOfWords(elem);
+    });
+})
+
+generateWords(15);
 
 typer.addEventListener('keydown', (e) => {
     e.preventDefault();
@@ -175,10 +225,18 @@ typer.addEventListener('keydown', (e) => {
 })
 
 function results() {
-    focus.textContent = `${(charCounters[1].textContent / (t / 60)).toFixed(1)} characters per minute`;
+    const numberOfWordsText = `${(charCounters[1].textContent / (t / 60)).toFixed(1)} characters per minute`;
+    let toggle = false;focus.textContent = numberOfWordsText;
+    resultsId = setInterval(() => {
+        if (toggle) {
+            focus.textContent = numberOfWordsText;
+        } else {
+            focus.textContent = 'press TAB to restart';
+        }
+        toggle = !toggle;
+    }, 2500);
     typer.blur();
 }
-
 
 typer.addEventListener('focus', (e) => {
     e.preventDefault();
@@ -200,6 +258,7 @@ focus.addEventListener('click', () => {
 
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Tab') {
-        document.location.reload();
+        clearInterval(resultsId);
+        generateWords(words.length);
     }
 })

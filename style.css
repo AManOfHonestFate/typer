@@ -40,17 +40,46 @@ body::after {
     color: var(--color-info);
 }
 
+.top-container {
+    display: flex;
+    flex-direction: row;
+    width: 85%;
+    justify-content: space-between;
+}
+
 .timer {
     font-size: 0.85em;
     color: var(--color-info);
-    padding: 0.75em 7.5% 0;
-    align-self: flex-start;
+}
+
+.word-count {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 0.65em;
+    color: var(--color-info);
+}
+
+.word-count li {
+    cursor: pointer;
+    list-style-type: none;
+    padding: 0 0.5em;
+    border-right: 0.01em solid var(--color-info);
+}
+
+.word-count li:last-child {
+    border-right: none;
+}
+
+.selected {
+    color: var(--color-right);
 }
 
 .typer {
     letter-spacing: 1px;
     white-space: pre-wrap;
     position: relative;
+    margin-top: 1em;
     padding: 0.5em 0;
     width: 85%;
     user-select: none;
@@ -102,6 +131,7 @@ body::after {
 .focus {
     font-size: 0.75em;
     position: absolute;
+    top: 45%;
     color: var(--color-info);
     opacity: 0;
     transition: opacity 200ms;
