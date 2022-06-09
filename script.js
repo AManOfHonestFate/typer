@@ -118,7 +118,6 @@ buttonsNumberOfWords.forEach((elem) => {
 generateWords(15);
 
 typer.addEventListener('keydown', (e) => {
-    e.preventDefault();
 
     if (type.ended) return;
 
@@ -238,8 +237,7 @@ function results() {
     typer.blur();
 }
 
-typer.addEventListener('focus', (e) => {
-    e.preventDefault();
+typer.addEventListener('focus', () => {
     focus.style.display = 'none';
     focus.style.opacity = 0;
 })
@@ -252,13 +250,14 @@ typer.addEventListener('blur', () => {
 })
 
 focus.addEventListener('click', () => {
-    typer.dispatchEvent(new Event('focus'));
     typer.focus();
 })
 
-document.addEventListener('keydown', (e) => {
+body.addEventListener('keydown', (e) => {
+    e.preventDefault();
     if (e.key === 'Tab') {
         clearInterval(resultsId);
         generateWords(words.length);
+        typer.focus();
     }
 })
