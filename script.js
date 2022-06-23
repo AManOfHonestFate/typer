@@ -254,8 +254,8 @@ focus.addEventListener('click', () => {
 })
 
 body.addEventListener('keydown', (e) => {
-    e.preventDefault();
     if (e.key === 'Tab') {
+        e.preventDefault();
         clearInterval(resultsId);
         generateWords(words.length);
         typer.focus();

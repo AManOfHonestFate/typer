@@ -13,26 +13,30 @@
     <title>Typer</title>
 </head>
 <body>
-    <div class="head">
-        <h2>Typer</h2>
-    </div>
-    <div class="top-container">
-        <div class="timer"></div>
-        <ul class="word-count">
-            words:
-            <li>10</li>
-            <li class="selected">15</li>
-            <li>20</li>
-        </ul>
-    </div>
-    <p tabindex="0" autofocus class="typer"></p>
-    <div class="focus">Click here to focus</div>
-    <div class="counter-container">
-        <div class="counter">
-            Characters: <b>0</b>/<b style="color: var(--color-right);">0</b>/<b style="color: var(--color-wrong);">0</b>
+    <div class="main-container">
+        <div class="head">
+            <h2>Typer</h2>
         </div>
-        <div class="counter">
-            Words: <b>0</b>/<b style="color: var(--color-right);">0</b>/<b style="color: var(--color-wrong);">0</b>
+        <div class="top-container">
+            <div class="timer"></div>
+            <ul class="word-count">
+                words:
+                <li>10</li>
+                <li class="selected">15</li>
+                <li>20</li>
+            </ul>
+        </div>
+        <div class="typer-container">
+            <p tabindex="-1" autofocus class="typer"></p>
+            <div class="focus">Click here to focus</div>
+        </div>
+        <div class="counter-container">
+            <div class="counter">
+                Characters: <b>0</b>/<b style="color: var(--color-right);">0</b>/<b style="color: var(--color-wrong);">0</b>
+            </div>
+            <div class="counter">
+                Words: <b>0</b>/<b style="color: var(--color-right);">0</b>/<b style="color: var(--color-wrong);">0</b>
+            </div>
         </div>
     </div>
 </body>

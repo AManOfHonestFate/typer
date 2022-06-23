@@ -15,25 +15,23 @@
 }
 
 body {
-    font-family: 'Space Mono', monospace;
-    font-size: 6.5vh;
-    min-height: 100vh;
     display: flex;
-    flex-direction: column;
+    font-family: 'Space Mono', monospace;
+    font-size: 2.2rem;
     background-color: var(--color-bg);
-    justify-content: space-evenly;
-    align-items: center;
     opacity: 0;
     transition: opacity 2s;
     user-select: none;
 }
 
-body::after {
-    display: none;
-    position: absolute;
-    left: 40%;
-    content: 'Click here to focus';
-    color: var(--color-click);
+.main-container {
+    margin: 0 auto;
+    display: flex;
+    min-height: 100vh;
+    width: 30em;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
 }
 
 .head h2 {
@@ -45,6 +43,7 @@ body::after {
     flex-direction: row;
     width: 85%;
     justify-content: space-between;
+    margin-top: 1em;
 }
 
 .timer {
@@ -75,16 +74,24 @@ body::after {
     color: var(--color-right);
 }
 
+.typer-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+}
+
 .typer {
+    font-size: 0.8em;
     letter-spacing: 1px;
     white-space: pre-wrap;
     position: relative;
-    margin-top: 1em;
     padding: 0.5em 0;
     width: 85%;
     user-select: none;
     transition: filter 200ms;
-    flex-grow: 1;
+    transform: translateY(-20%);
 }
 
 .typer:focus {
@@ -131,9 +138,10 @@ body::after {
 .focus {
     font-size: 0.75em;
     position: absolute;
-    top: 45%;
+    top: 50%;
     color: var(--color-info);
     opacity: 0;
+    transform: translateY(-2em);
     transition: opacity 200ms;
 }
 
@@ -150,9 +158,9 @@ body::after {
 
 .counter-container {
     color: var(--color-info);
-    width: 80%;
+    width: 85%;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
-    flex-grow: 1;
+    margin-bottom: 1.5em;
 }
